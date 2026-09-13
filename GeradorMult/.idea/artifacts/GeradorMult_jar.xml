@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GeradorMult:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/GeradorMult_jar</output-path>
+    <root id="archive" name="GeradorMult.jar">
+      <element id="module-output" name="GeradorMult" />
+    </root>
+  </artifact>
+</component>
