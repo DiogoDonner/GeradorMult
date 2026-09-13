@@ -209,7 +209,7 @@ Algumas funcionalidades que podem ser adicionadas futuramente:
 - [ ] Melhorar o design da interface;
 - [ ] Separar o projeto em diferentes classes;
 - [ ] Criar um instalador para Windows;
-- [ ] Gerar uma versão `.exe`.
+
 
 ---
 
