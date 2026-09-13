@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Random2a10 {
 
@@ -13,8 +14,8 @@ public class Random2a10 {
 
         AtomicBoolean rodando = new AtomicBoolean(true);
 
-        int min = 2;
-        int max = 10;
+        AtomicInteger min = new AtomicInteger(0);
+        AtomicInteger max = new AtomicInteger(10);
         int itensPorPagina = 10;
         ArrayList<String> historico = new ArrayList<>();
         int[] resultMult = {0};
@@ -49,18 +50,21 @@ public class Random2a10 {
 
         JButton botaoResultado = new JButton("Resultado");
         botaoResultado.setFont(new Font("Arial", Font.BOLD, 16));
+        JButton botaoConfig = new JButton("Configurações");
+        botaoConfig.setFont(new Font("Arial", Font.BOLD, 16));
 
 
         JPanel painelBotoes = new JPanel();
-        painelBotoes.add(botaoSortear);
         painelBotoes.add(botaoSair);
+        painelBotoes.add(botaoSortear);
         painelBotoes.add(botaoHistorico);
         painelBotoes.add(botaoResultado);
+        painelBotoes.add(botaoConfig);
 
 
         botaoSortear.addActionListener(e -> {
-            int numero1 = r.nextInt((max - min) + 1) + min;
-            int numero2 = r.nextInt((max - min) + 1) + min;
+            int numero1 = r.nextInt((max.get() - min.get()) + 1) + min.get();
+            int numero2 = r.nextInt((max.get() - min.get()) + 1) + min.get();
             resultMult[0] = numero1 * numero2;
             String multiplicacao = numero1 + " x " + numero2;
             historico.add(multiplicacao);
@@ -235,6 +239,85 @@ public class Random2a10 {
             atualizarPagina.run();
 
             janelaHistorico.setVisible(true);
+        });
+
+        botaoConfig.addActionListener(e -> {
+
+            JFrame janelaConfig = new JFrame("Configurações");
+            janelaConfig.setSize(350, 250);
+            janelaConfig.setLocationRelativeTo(janela);
+            janelaConfig.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            JPanel painel = new JPanel();
+            painel.setLayout(new GridLayout(3, 2, 2, 5));
+
+            JLabel labelMin = new JLabel("Número mínimo:");
+            JLabel labelMax = new JLabel("Número máximo:");
+
+            JTextField campoMin = new JTextField(String.valueOf(min.get()));
+            JTextField campoMax = new JTextField(String.valueOf(max.get()));
+
+            JButton botaoSalvar = new JButton("Salvar");
+            JButton botaoCancelar = new JButton("Cancelar");
+
+            painel.add(labelMin);
+            painel.add(campoMin);
+
+            painel.add(labelMax);
+            painel.add(campoMax);
+
+            painel.add(botaoSalvar);
+            painel.add(botaoCancelar);
+
+            janelaConfig.add(painel);
+
+            botaoSalvar.addActionListener(e2 -> {
+
+                try {
+
+                    int novoMin = Integer.parseInt(campoMin.getText());
+                    int novoMax = Integer.parseInt(campoMax.getText());
+
+                    if (novoMin >= novoMax) {
+
+                        JOptionPane.showMessageDialog(
+                                janelaConfig,
+                                "O número mínimo não pode ser maior ou igual que o máximo.",
+                                "Erro",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+
+                        return;
+                    }
+
+                    min.set(novoMin);
+                    max.set(novoMax);
+
+                    JOptionPane.showMessageDialog(
+                            janelaConfig,
+                            "Configurações salvas!",
+                            "Configurações",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+
+                    janelaConfig.dispose();
+
+                } catch (NumberFormatException ex) {
+
+                    JOptionPane.showMessageDialog(
+                            janelaConfig,
+                            "Digite apenas números inteiros.",
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            });
+
+            botaoCancelar.addActionListener(e2 -> {
+                janelaConfig.dispose();
+            });
+
+            janelaConfig.setVisible(true);
         });
 
 

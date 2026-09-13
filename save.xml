@@ -13,7 +13,7 @@
   <stayAlive>false</stayAlive>
   <restartOnCrash>true</restartOnCrash>
   <manifest></manifest>
-  <icon>C:\Users\Windows\Documents\Git\JAVA\GeradorMult\67309a91-fc43-4c1a-b30b-ed6f3426acf8.ico</icon>
+  <icon>C:\Users\Windows\Documents\Git\JAVA\GeradorMult\icone.ico</icon>
   <classPath>
     <mainClass>Random2a10</mainClass>
     <cp>Random</cp>
