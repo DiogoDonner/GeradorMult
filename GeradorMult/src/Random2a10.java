@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Random2a10{
+public class Random2a10 {
 
     public static void main(String[] args) {
 
@@ -15,12 +15,13 @@ public class Random2a10{
 
         int min = 2;
         int max = 10;
-        int pagconfig = 10;
+        int itensPorPagina = 10;
         ArrayList<String> historico = new ArrayList<>();
+        int[] resultMult = {0};
 
-        JFrame janela = new JFrame("Random 2 a 10");
+        JFrame janela = new JFrame();
 
-        janela.setSize(450, 300);
+        janela.setSize(600, 300);
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         janela.setLocationRelativeTo(null);
 
@@ -36,7 +37,7 @@ public class Random2a10{
         resultado.setFont(new Font("Arial", Font.BOLD, 32));
 
 
-        JButton botaoSortear = new JButton("Sortear novamente");
+        JButton botaoSortear = new JButton("Sortear");
         botaoSortear.setFont(new Font("Arial", Font.BOLD, 16));
 
 
@@ -46,20 +47,45 @@ public class Random2a10{
         JButton botaoHistorico = new JButton("Histórico");
         botaoHistorico.setFont(new Font("Arial", Font.BOLD, 16));
 
+        JButton botaoResultado = new JButton("Resultado");
+        botaoResultado.setFont(new Font("Arial", Font.BOLD, 16));
+
 
         JPanel painelBotoes = new JPanel();
         painelBotoes.add(botaoSortear);
         painelBotoes.add(botaoSair);
         painelBotoes.add(botaoHistorico);
+        painelBotoes.add(botaoResultado);
 
 
         botaoSortear.addActionListener(e -> {
-
             int numero1 = r.nextInt((max - min) + 1) + min;
             int numero2 = r.nextInt((max - min) + 1) + min;
+            resultMult[0] = numero1 * numero2;
             String multiplicacao = numero1 + " x " + numero2;
             historico.add(multiplicacao);
             resultado.setText(multiplicacao);
+        });
+
+
+        botaoResultado.addActionListener(e -> {
+            if (resultMult[0] == 0) {
+                JOptionPane.showMessageDialog(
+                        janela,
+                        "Nenhuma multiplicação foi sorteada ainda.",
+                        "RESULTADO",
+                        JOptionPane.INFORMATION_MESSAGE);
+                return;
+
+            } else {
+                JOptionPane.showMessageDialog(
+                        janela,
+                        "<html>O Resultado da Multiplicação é: <u>" + resultMult[0] + "</u></html>",
+                        "RESULTADO",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+                return;
+            }
         });
 
 
@@ -81,8 +107,6 @@ public class Random2a10{
                 );
                 return;
             }
-
-            final int itensPorPagina = 10;
 
             JFrame janelaHistorico = new JFrame("Histórico de Multiplicações");
             janelaHistorico.setSize(450, 400);
@@ -178,14 +202,12 @@ public class Random2a10{
                 }
             });
 
-            // Painel dos botões
             JPanel painelBotoesHistorico = new JPanel();
 
             painelBotoesHistorico.add(botaoAnterior);
             painelBotoesHistorico.add(paginaLabel);
             painelBotoesHistorico.add(botaoProxima);
 
-            // Painel inferior
             JPanel painelInferior = new JPanel(new BorderLayout());
 
             painelInferior.add(
